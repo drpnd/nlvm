@@ -7,29 +7,31 @@ set (nlvm_VERSION "current")
 #set (nlvm_VERSION_PATCH "0")
 
 # Define the build time
-execute_process(COMMAND uname -a
+execute_process (COMMAND uname -a
   OUTPUT_VARIABLE _output OUTPUT_STRIP_TRAILING_WHITESPACE)
 if(WIN32)
- execute_process(COMMAND cmd /C win_date.bat
-    OUTPUT_VARIABLE BUILD_TIME)
+ execute_process (COMMAND cmd /C win_date.bat
+    OUTPUT_VARIABLE BUILD_DATETIME)
 else(WIN32)
-  execute_process(COMMAND date "+%Y-%m-%d-%H:%M"
-    OUTPUT_VARIABLE BUILD_TIME)
+  execute_process (COMMAND date "+%Y-%m-%d %H:%M:%S"
+    OUTPUT_VARIABLE BUILD_DATETIME)
 endif(WIN32)
-string(STRIP ${BUILD_TIME} BUILD_TIME)
+string(STRIP ${BUILD_DATETIME} BUILD_DATETIME)
 
-add_executable(nlvm_test_basic tests/basic.c)
+add_definitions (-DBUILD_DATETIME=\"${BUILD_DATETIME}\")
 
+# nlang
+set (CMAKE_BINARY_DIR "build")
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+add_executable(nlang nlang/main.c)
 
 # testing
 include(CTest)
 set (CTEST_PROJECT_NAME "nlvm")
 # does the application run
+add_executable(nlvm_test_basic tests/basic.c)
 add_test (BasicTest nlvm_test_basic)
-
-# does it sqrt of 25
-#add_test (TutorialComp25 Tutorial 25)
-#set_tests_properties (TutorialComp25 PROPERTIES PASS_REGULAR_EXPRESSION "25 is 5")
+add_test (BasicTestArg nlvm_test_basic 123)
 
 
 # build a CPack driven installer package
