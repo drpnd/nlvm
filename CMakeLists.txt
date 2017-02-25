@@ -48,11 +48,18 @@ set (CPACK_IGNORE_FILES "/CVS/;/\\.svn/;/\\.bzr/;/\\.hg/;/\\.git/;\\.swp\$;\\.#;
 add_custom_target(git-dist
   COMMAND cmake ..
   COMMAND make dist
-  WORKING_DIRECTORY .dist/build
-  DEPENDS git-dist2)
-add_custom_target(git-dist2
-  COMMAND rm -rf .dist
-  COMMAND git clone . .dist
-  COMMAND mkdir .dist/build
-  #COMMAND make git-dist2
+  COMMAND cp nlvm-*-Source.tar.* ../../
+  WORKING_DIRECTORY .working/build
+  DEPENDS git-working-prepare)
+add_custom_target(git-working-prepare
+  COMMAND rm -rf .working
+  COMMAND git clone . .working
+  COMMAND mkdir .working/build
   WORKING_DIRECTORY .)
+
+add_custom_target(git-test
+  COMMAND cmake ..
+  COMMAND make
+  COMMAND make test
+  WORKING_DIRECTORY .working/build
+  DEPENDS git-working-prepare)
