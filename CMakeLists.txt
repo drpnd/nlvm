@@ -18,6 +18,9 @@ else(WIN32)
 endif(WIN32)
 string(STRIP ${BUILD_DATETIME} BUILD_DATETIME)
 
+execute_process (COMMAND git symbolic-ref --short HEAD
+  OUTPUT_VARIABLE GIT_CURRENT_BRANCH)
+
 add_definitions (-DBUILD_DATETIME=\"${BUILD_DATETIME}\")
 
 set (CMAKE_BINARY_DIR "build")
@@ -61,9 +64,10 @@ add_custom_target(git-dist
   COMMAND cp nlvm-*-Source.tar.* ../../
   WORKING_DIRECTORY .working/build
   DEPENDS git-working-prepare)
+
 add_custom_target(git-working-prepare
   COMMAND rm -rf .working
-  COMMAND git clone . .working
+  COMMAND git clone . .working -b ${GIT_CURRENT_BRANCH}
   COMMAND mkdir .working/build
   WORKING_DIRECTORY .)
 
