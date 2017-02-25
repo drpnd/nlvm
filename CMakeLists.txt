@@ -20,10 +20,14 @@ string(STRIP ${BUILD_DATETIME} BUILD_DATETIME)
 
 add_definitions (-DBUILD_DATETIME=\"${BUILD_DATETIME}\")
 
-# nlang
 set (CMAKE_BINARY_DIR "build")
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+# nlang
 add_executable(nlang nlang/main.c)
+
+# vm runtime
+add_executable(nlvm vm/main.c)
 
 # testing
 include(CTest)
