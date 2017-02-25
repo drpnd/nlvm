@@ -34,8 +34,8 @@ include(CTest)
 set (CTEST_PROJECT_NAME "nlvm")
 # does the application run
 add_executable(nlvm_test_basic tests/basic.c)
-add_test (BasicTest nlvm_test_basic)
-add_test (BasicTestArg nlvm_test_basic 123)
+add_test (BasicTest ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/nlvm_test_basic)
+add_test (BasicTestArg ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/nlvm_test_basic)
 
 
 # build a CPack driven installer package
