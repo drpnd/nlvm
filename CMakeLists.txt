@@ -1,10 +1,10 @@
 cmake_minimum_required (VERSION 2.6)
 
 project (nlvm)
-#set (nlvm_VERSION "0.1.0")
-set (nlvm_VERSION_MAJOR "0")
-set (nlvm_VERSION_MINOR "1")
-set (nlvm_VERSION_PATCH "1")
+set (nlvm_VERSION "current")
+#set (nlvm_VERSION_MAJOR "0")
+#set (nlvm_VERSION_MINOR "1")
+#set (nlvm_VERSION_PATCH "0")
 
 # Define the build time
 execute_process(COMMAND uname -a
@@ -37,9 +37,13 @@ include (InstallRequiredSystemLibraries)
 set (CPACK_PACKAGE_VENDOR "Hirochika Asai")
 set (CPACK_RESOURCE_FILE_LICENSE
      "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+if(nlvm_VERSION)
+  set (CPACK_PACKAGE_VERSION "${nlvm_VERSION}")
+else(nlvm_VERSION)
 set (CPACK_PACKAGE_VERSION_MAJOR "${nlvm_VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${nlvm_VERSION_MINOR}")
 set (CPACK_PACKAGE_VERSION_PATCH "${nlvm_VERSION_PATCH}")
+endif(nlvm_VERSION)
 #set (CPACK_SOURCE_PACKAGE_FILE_NAME "nlvm-0.1.1")
 include (CPack)
 
