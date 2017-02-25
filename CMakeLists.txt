@@ -23,8 +23,9 @@ execute_process (COMMAND git symbolic-ref --short HEAD
 
 add_definitions (-DBUILD_DATETIME=\"${BUILD_DATETIME}\")
 
-set (CMAKE_BINARY_DIR "build")
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+#set (CMAKE_BINARY_DIR "build")
+#set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "build")
 
 # nlang
 add_executable(nlang nlang/main.c)
